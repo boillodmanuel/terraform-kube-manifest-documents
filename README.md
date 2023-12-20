@@ -16,14 +16,14 @@ Note: This is the prefered way as mentioned in [kubectl_file_documents](https://
 ```terraform
 # Split manifest into documents
 module "my_manifest" {
-  source = "<path_to>/kube-manifest-documents"
+  source = "boillodmanuel/manifest-documents/null"
   content = file("${path.module}/manifests/my-manifest.yaml"
 }
 
-# Apply manifest documents using "alekc/kubectl" provider
-resource "kubectl_manifest" "my_manifest_documents" {
+# Apply manifest documents using "hashicorp/kubernetes" provider
+resource "kubernetes_manifest" "my_custom_resource" {
   for_each = module.my_manifest.documents_per_id
-  yaml_body = each.value
+  manifest = yamldecode(each.value)
 }
 ```
 
@@ -34,14 +34,14 @@ To split and apply documents using `count`:
 ```terraform
 # Split manifest into documents
 module "my_manifest" {
-  source = "<path_to>/kube-manifest-documents"
+  source = "boillodmanuel/manifest-documents/null"
   content = file("${path.module}/manifests/my-manifest.yaml"
 }
 
-# Apply manifest documents using "alekc/kubectl" provider
-resource "kubectl_manifest" "my_manifest_documents" {
+# Apply manifest documents using "hashicorp/kubernetes" provider
+resource "kubernetes_manifest" "my_custom_resource" {
   count = length(module.my_manifest.documents)
-  yaml_body = module.my_manifest.documents[count.index]
+  manifest = yamldecode(module.my_manifest.documents[count.index])
 }
 ```
 
