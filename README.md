@@ -6,6 +6,8 @@ This is a replacement for the buggy [kubectl_file_documents](https://registry.te
 
 # Usage
 
+📗 See complete example in the [examples](./examples) directory.
+
 ## Example using `for_each`
 
 To split and apply documents using `for_each`:
@@ -17,7 +19,7 @@ Note: This is the prefered way as mentioned in [kubectl_file_documents](https://
 # Split manifest into documents
 module "my_manifest" {
   source = "boillodmanuel/manifest-documents/null"
-  content = file("${path.module}/manifests/my-manifest.yaml"
+  content = file("${path.module}/manifests/my-manifest.yaml")
 }
 
 # Apply manifest documents using "hashicorp/kubernetes" provider
@@ -35,7 +37,7 @@ To split and apply documents using `count`:
 # Split manifest into documents
 module "my_manifest" {
   source = "boillodmanuel/manifest-documents/null"
-  content = file("${path.module}/manifests/my-manifest.yaml"
+  content = file("${path.module}/manifests/my-manifest.yaml")
 }
 
 # Apply manifest documents using "hashicorp/kubernetes" provider
